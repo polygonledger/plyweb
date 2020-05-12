@@ -12,11 +12,11 @@ import (
 	"time"
 
 	"github.com/polygonledger/node/crypto"
-	"github.com/polygonledger/node/ntcl"
+	"github.com/polygonledger/node/netio"
 	"github.com/polygonledger/node/parser"
 )
 
-var connect_peer ntcl.Peer
+var connect_peer netio.Peer
 
 var pw string
 var node_status string
@@ -135,7 +135,7 @@ func sendnode(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func initClient(mainPeerAddress string, verbose bool) ntcl.Ntchan {
+func initClient(mainPeerAddress string, verbose bool) netio.Ntchan {
 	const node_port = 8888
 	addr := mainPeerAddress + ":" + strconv.Itoa(node_port)
 	log.Println("dial ", addr)
@@ -146,17 +146,17 @@ func initClient(mainPeerAddress string, verbose bool) ntcl.Ntchan {
 	}
 
 	log.Println("connected")
-	ntchan := ntcl.ConnNtchan(conn, "client", addr, verbose)
+	ntchan := netio.ConnNtchan(conn, "client", addr, verbose)
 
-	go ntcl.ReadLoop(ntchan)
-	go ntcl.ReadProcessor(ntchan)
-	go ntcl.WriteProcessor(ntchan)
-	go ntcl.WriteLoop(ntchan, 300*time.Millisecond)
+	go netio.ReadLoop(ntchan)
+	go netio.ReadProcessor(ntchan)
+	go netio.WriteProcessor(ntchan)
+	go netio.WriteLoop(ntchan, 300*time.Millisecond)
 	return ntchan
 
 }
 
-func sendmsg(peer ntcl.Peer, req_msg string) string {
+func sendmsg(peer netio.Peer, req_msg string) string {
 
 	peer.NTchan.REQ_out <- req_msg
 
@@ -168,14 +168,14 @@ func sendmsg(peer ntcl.Peer, req_msg string) string {
 
 }
 
-func ping(peer ntcl.Peer) {
-	ping_msg := ntcl.EncodeMsgMap(ntcl.REQ, ntcl.CMD_PING)
+func ping(peer netio.Peer) {
+	ping_msg := netio.EncodeMsgMap(netio.REQ, netio.CMD_PING)
 	reply := sendmsg(peer, ping_msg)
 	success := reply == "{:REP PONG}"
 	log.Println("success ", success)
 }
 
-func getStatus(peer ntcl.Peer) {
+func getStatus(peer netio.Peer) {
 	node_status = sendmsg(connect_peer, "{:REQ STATUS}")
 	fmt.Println(node_status)
 	//return node_status
@@ -197,7 +197,7 @@ func main() {
 	ntchan := initClient(peerAddress, true)
 
 	const node_port = 8888
-	connect_peer = ntcl.CreatePeer(peerAddress, peerAddress, node_port, ntchan)
+	connect_peer = netio.CreatePeer(peerAddress, peerAddress, node_port, ntchan)
 
 	ping(connect_peer)
 

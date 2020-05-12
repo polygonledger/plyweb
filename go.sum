@@ -74,6 +74,7 @@ github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pkg/profile v1.2.1/go.mod h1:hJw3o1OdXxsrSjjVksARp5W95eeEaEfptyVZyv6JUPA=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
+github.com/polygonledger/edn v0.0.2 h1:GaO8fPaNsu/tl0+WZ13XgH9yVGmUERysURXO33/kW+w=
 github.com/polygonledger/edn v0.0.2/go.mod h1:bN0UtosYshovMfCJm3OlVHJ93aN7GrF3T2vl4v7pnqM=
 github.com/polygonledger/node v0.0.0-20200502072124-46b566873313 h1:/GKV61TPm0xVB8XTHniSNsQBa33Ce8H1HQdw0qlouoM=
 github.com/polygonledger/node v0.0.0-20200502072124-46b566873313/go.mod h1:B3nrPg7WREpO6Px+0N//+EkG7G3Ipqbo90W9jeBnEYk=
